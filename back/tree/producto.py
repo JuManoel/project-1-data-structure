@@ -1,4 +1,5 @@
 from numpy import float32, uint32
+from numpy import array
 class Producto():
     """
 This class represents a product with attributes such as name, price, stock, and category.
@@ -64,3 +65,9 @@ __init__(self, nombre, precio, stock, categoria)
         """
         self.__init__(nombre, precio, stock, categoria)
         self.id = uint32(id)
+    
+    def __str__(self):
+        return f"ID: {self.id}, Nombre: {self.nombre}, Precio: {self.precio}, Stock: {self.stock}, Categoria: {self.categoria}"
+
+    def toNpArray(self):
+        return array([self.id, self.nombre, self.precio, self.stock, self.categoria])
