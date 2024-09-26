@@ -1,17 +1,17 @@
-from producto import Product
+from producto import Producto
 class TiendaAVL:
     def __init__(self):
         self.raiz = None
 
     def insertar(self, id, nombre, precio, stock, categoria):
         if self.raiz is None:
-            self.raiz = Product(id, nombre, precio, stock, categoria)
+            self.raiz = Producto(id, nombre, precio, stock, categoria)
         else:
             self.raiz = self._insertar(self.raiz, id, nombre, precio, stock, categoria)
 
     def _insertar(self, nodo, id, nombre, precio, stock, categoria):
         if not nodo:
-            return Product(id, nombre, precio, stock, categoria)
+            return Producto(id, nombre, precio, stock, categoria)
 
         if id < nodo.id:
             nodo.izquierda = self._insertar(nodo.izquierda, id, nombre, precio, stock, categoria)

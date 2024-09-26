@@ -15,7 +15,7 @@ def read_csv(filename):
     dataFrame = pd.read_csv(filename)
     return dataFrame
 
-def add_column(producto, dataFrame):
+def add_row(producto, dataFrame):
     """
         param: producto: Producto
         param: dataFrame: DataFrame
@@ -26,7 +26,7 @@ def add_column(producto, dataFrame):
     dataFrame.add(producto.toNpArray())
     return dataFrame
 
-def remove_column(id, dataFrame):
+def remove_row(id, dataFrame):
     """
         param: id: int32
         param: dataFrame: DataFrame
@@ -35,7 +35,7 @@ def remove_column(id, dataFrame):
     dataFrame = dataFrame[dataFrame['id'] != id]
     return dataFrame
 
-def update_column(id, dataFrame, newProduct):
+def update_row(id, dataFrame, newProduct):
     """
         param: id: int32
         param: dataFrame: DataFrame

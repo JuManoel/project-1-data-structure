@@ -1,4 +1,4 @@
-from service import Service
+from service.service import Service
 
 
 # Cristian, usted solo va poder manusear a su gusto esa classe controller
@@ -11,4 +11,20 @@ class Controller():
         crea y me hare cargo de crear todo lo nescesario en repository y service
         ok?
     """
-    pass
+    def __init__(self, path = "./"):
+        self.service = Service(path)
+
+    def insertarProducto(self, productoDict = {}):
+        tree = self.service.insertarProducto(productoDict)
+        return tree
+
+    def modificarProducto(self, id, productoDict = {}):
+        tree = self.service.cambiarProducto(id, productoDict)
+        return tree
+
+    def eliminarProducto(self, id):
+        tree = self.service.eliminarProducto(id)
+        return tree
+    
+    def getTree(self):
+        return self.service.getTree()
