@@ -1,4 +1,4 @@
-from service.service import Service
+from ..service.service import Service
 
 
 # Cristian, usted solo va poder manusear a su gusto esa classe controller

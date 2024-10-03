@@ -1,6 +1,3 @@
-from front import * # cambiar a medida que sea nescesario
+from front.inicio import Inicio 
 
-def main():
-    print("hello world")
-
-main()
+Inicio()

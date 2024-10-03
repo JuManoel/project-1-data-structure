@@ -1,4 +1,4 @@
-from producto import Producto
+from ..tree.producto import Producto
 class TiendaAVL:
     def __init__(self):
         self.raiz = None

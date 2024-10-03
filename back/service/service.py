@@ -1,6 +1,6 @@
-from repository.repository import *
-from tree.producto import Producto
-from tree.tienda import TiendaAVL
+from ..repository.repository import *
+from ..tree.producto import Producto
+from ..tree.tienda import TiendaAVL
 # aca va recibir los datos del controller y convertir, lo que sea nescesario
 # para que el repository pueda funcionar sin problemas
 class Service():
