@@ -115,3 +115,22 @@ class TiendaAVL:
             self._recorrido_inorden(nodo.izquierda, elementos)
             elementos.append(nodo.id)
             self._recorrido_inorden(nodo.derecha, elementos)
+
+    def buscarProducto(self, nombre = "", precioMin = 0, precioMax = (2.0)**32-1, categoria = ""):
+        self._buscarProducto(self.raiz, nombre, precioMin, precioMax, categoria)
+
+    def _buscarProducto(self,nodo, nombre = "", precioMin = 0, precioMax = (2.0)**32-1, categoria = ""):
+        if nodo is not None:
+            nodo.show = nodo.nombre in nombre and (precioMax>=nodo.precio >= precioMin) and nodo.categoria in categoria
+            self._buscarProducto(nodo.izquierda, nombre, precioMin, precioMax, categoria)
+            self._buscarProducto(nodo.derecha, nombre, precioMin, precioMax, categoria)
+    def buscarProductoId(self, id):
+        pass
+    def _buscarProductoId(self, nodo,id):
+        if nodo is not None:
+            if(nodo.id == id):
+                nodo.show = True
+            else:
+                nodo.show = False
+                self._buscarProductoId(nodo.izquierda,id)
+                self._buscarProductoId(nodo.derecha,id)
