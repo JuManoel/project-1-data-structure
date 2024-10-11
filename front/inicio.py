@@ -1,8 +1,10 @@
-from ..front.ventanaBase import *
-
-class Inicio(ventanaBase):
+import pygame as pg
+from back.controller.controller import Controller as ctrl
+from front.agregar_Producto import agregar_Producto
+class Inicio():
     def __init__(self):
         self.estado = "menu"  # Estado inicial: menú principal
+        self.agregar=agregar_Producto()
         pg.init()
 
     def menu(self, screen):
@@ -56,6 +58,15 @@ class Inicio(ventanaBase):
         return posiciones
 
     
+    def validar_mouse(self, mouse_pos,posiciones):
+        if posiciones[0][0] <= mouse_pos[0] <= posiciones[0][0] + 200 and posiciones[0][1] <= mouse_pos[1] <= posiciones[0][1] + 100:
+         self.estado = "agregar_producto"  # Cambia el estado a "agregar_producto" 
+        if posiciones[1][0] <= mouse_pos[0] <= posiciones[1][0] + 200 and posiciones[1][1] <= mouse_pos[1] <= posiciones[1][1] + 100:
+            self.estado="Modificar elemento"  # Aquí puedes cambiar el estado a una función específica
+        if posiciones[2][0] <= mouse_pos[0] <= posiciones[2][0] + 200 and posiciones[2][1] <= mouse_pos[1] <= posiciones[2][1] + 100:
+            print("Borrar elemento")  # Aquí puedes cambiar el estado a una función específica
+        if posiciones[3][0] <= mouse_pos[0] <= posiciones[3][0] + 200 and posiciones[3][1] <= mouse_pos[1] <= posiciones[3][1] + 100:
+            print("Buscar elemento")  # Aquí puedes cambiar el estado a una función específica
     def run(self):
         # Configuración de la pantalla
         screen = pg.display.set_mode((1000, 600))  # 1000x600 px
@@ -66,9 +77,7 @@ class Inicio(ventanaBase):
             if self.estado == "menu":
                 posiciones = self.menu(screen)
             elif self.estado == "agregar_producto":
-                self.agregar_producto(screen)
-            elif self.estado == "Modificar elemento":
-                self.ventana_Modificar(screen)
+                self.estado = self.agregar(screen)  # Ahora obtiene el estado de vuelta
 
             # Maneja eventos
             for event in pg.event.get():
@@ -78,10 +87,6 @@ class Inicio(ventanaBase):
                     mouse_pos = pg.mouse.get_pos()                   
                     self.validar_mouse(mouse_pos, posiciones)
 
-                
-
             pg.display.flip()
 
         pg.quit()
-
-

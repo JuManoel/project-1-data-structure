@@ -1,8 +1,6 @@
 from ..back.controller.controller import Controller as ctrl
 import pygame as pg
-from ..front.adicionar import adicionar as add
 from ..front.inicio import Inicio 
-from ..front.inputBox import InputBox
 
 class ventanaBase():
     def __init__(self):
