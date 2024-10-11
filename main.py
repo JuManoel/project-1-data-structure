@@ -1,3 +1,4 @@
 from front.inicio import Inicio 
 
-Inicio()
+ventana = Inicio()
+ventana.run()
