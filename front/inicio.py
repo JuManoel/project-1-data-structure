@@ -64,7 +64,7 @@ class Inicio:
             if self.estado == "agregar_producto":
                 ventana = agregar_Producto()  # Ahora obtiene el estado de vuelta
                 ventana.formulario(self.screen)
-                pg.quit()  # Cambié para usar el método run en lugar de formulario
+                self.estado = "menu"  # Cambia el estado a "menu" cuando termine la ventana agregar_Producto
 
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -75,4 +75,4 @@ class Inicio:
 
             pg.display.flip()
 
-        pg.quit()
+pg.quit()
