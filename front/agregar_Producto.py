@@ -82,4 +82,3 @@ class agregar_Producto:
                                 box["text"] += event.unicode  # Agrega el carácter
 
             pg.display.flip()  # Actualiza la pantalla
-        self.estado = "menu"  # Cambia el estado a menú
