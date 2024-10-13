@@ -1,5 +1,8 @@
 import pygame as pg
 from front.agregar_Producto import agregar_Producto
+from front.modificar import modificar
+from front.borrar import borrar
+from front.buscar_elemento import buscar_Producto
 class Inicio:
     def __init__(self):
         self.estado = "menu"  # Estado inicial: menú principal
@@ -52,10 +55,9 @@ class Inicio:
         elif posiciones[1][0] <= mouse_pos[0] <= posiciones[1][0] + 200 and posiciones[1][1] <= mouse_pos[1] <= posiciones[1][1] + 100:
             self.estado = "Modificar elemento"  # Cambia a una función específica
         elif posiciones[2][0] <= mouse_pos[0] <= posiciones[2][0] + 200 and posiciones[2][1] <= mouse_pos[1] <= posiciones[2][1] + 100:
-            print("Borrar elemento")  # Cambia a una función específica
+            self.estado = "borrar" 
         elif posiciones[3][0] <= mouse_pos[0] <= posiciones[3][0] + 200 and posiciones[3][1] <= mouse_pos[1] <= posiciones[3][1] + 100:
-            print("Buscar elemento")  # Cambia a una función específica
-
+           self.estado="Buscar elemento" 
     def run(self):
         corriendo = True
         while corriendo:
@@ -65,6 +67,18 @@ class Inicio:
                 ventana = agregar_Producto()  # Ahora obtiene el estado de vuelta
                 ventana.formulario(self.screen)
                 self.estado = "menu"  # Cambia el estado a "menu" cuando termine la ventana agregar_Producto
+            if self.estado == "Modificar elemento":
+               modi=modificar()
+               modi.modificacion(self.screen)
+               self.estado = "menu"
+            if self.estado=="borrar":
+                suprimir=borrar()
+                suprimir.borrar_elemento(self.screen)
+                self.estado="menu"
+            if self.estado=="Buscar elemento":
+                buscar=buscar_Producto()
+                buscar.busqueda(self.screen)
+                self.estado="menu"
 
             for event in pg.event.get():
                 if event.type == pg.QUIT:

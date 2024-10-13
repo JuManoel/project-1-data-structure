@@ -12,8 +12,9 @@ class agregar_Producto:
         title_font = pg.font.Font(None, 28)
 
         # Colores
-        AZUL = (0, 120, 215)
+        verde = (0, 200, 0)
         Color = (9, 12, 155)
+        Rojo=(200, 0, 0)
 
         input_boxes = [
             {"rect": pg.Rect(100, 50, 300, 32), "text": '', "active": False, "title": "Nombre"},
@@ -45,8 +46,8 @@ class agregar_Producto:
                 pg.draw.rect(screen, color, box["rect"], 2)
                 screen.blit(txt_surface, (box["rect"].x + 5, box["rect"].y + 5))
 
-            pg.draw.rect(screen, AZUL, button_save)  # Botón Guardar
-            pg.draw.rect(screen, AZUL, button_cancel)  # Botón Cancelar
+            pg.draw.rect(screen, verde, button_save)  # Botón Guardar
+            pg.draw.rect(screen, Rojo, button_cancel)  # Botón Cancelar
 
             save_surface = font.render('Guardar', True, (255, 255, 255))
             cancel_surface = font.render('Cancelar', True, (255, 255, 255))
@@ -66,9 +67,9 @@ class agregar_Producto:
                     if button_save.collidepoint(event.pos):
                         for box in input_boxes:
                             print(f'{box["title"]} agregado: {box["text"]}')  # Aquí puedes guardar los datos
-                        done = True  # Termina el bucle para volver al menú
+                        done = True  
                     elif button_cancel.collidepoint(event.pos):
-                        done = True  # Termina el bucle para volver al menú
+                        done = True  
                 if event.type == pg.KEYDOWN:
                     for box in input_boxes:
                         if box["active"]:
@@ -80,5 +81,4 @@ class agregar_Producto:
                                 box["text"] = box["text"][:-1]  # Borra el último carácter
                             else:
                                 box["text"] += event.unicode  # Agrega el carácter
-
             pg.display.flip()  # Actualiza la pantalla
