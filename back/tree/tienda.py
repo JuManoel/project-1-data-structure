@@ -1,4 +1,5 @@
 from ..tree.producto import Producto
+import copy
 class TiendaAVL:
     def __init__(self):
         self.raiz = None
@@ -6,20 +7,23 @@ class TiendaAVL:
     def insertar(self, id, nombre, precio, stock, categoria):
         if self.raiz is None:
             self.raiz = Producto(id, nombre, precio, stock, categoria)
+            return [self.raiz]
         else:
-            self.raiz = self._insertar(self.raiz, id, nombre, precio, stock, categoria)
+            estados = [copy.deepcopy(self.raiz)]
+            self.raiz = self._insertar(self.raiz, id, nombre, precio, stock, categoria, estados)
+            return estados
 
-    def _insertar(self, nodo, id, nombre, precio, stock, categoria):
+    def _insertar(self, nodo, id, nombre, precio, stock, categoria, estados):
         if not nodo:
             return Producto(id, nombre, precio, stock, categoria)
 
         if id < nodo.id:
-            nodo.izquierda = self._insertar(nodo.izquierda, id, nombre, precio, stock, categoria)
+            nodo.izquierda = self._insertar(nodo.izquierda, id, nombre, precio, stock, categoria,estados)
         elif id > nodo.id:
-            nodo.derecha = self._insertar(nodo.derecha, id, nombre, precio, stock, categoria)
+            nodo.derecha = self._insertar(nodo.derecha, id, nombre, precio, stock, categoria, estados)
         else:
             return nodo  # Los valores duplicados no están permitidos
-
+        estados.append(copy.deepcopy(self.raiz))
         # Actualizar la altura del nodo actual
         nodo.altura = 1 + max(self.obtener_altura(nodo.izquierda), self.obtener_altura(nodo.derecha))
 
@@ -117,15 +121,23 @@ class TiendaAVL:
             self._recorrido_inorden(nodo.derecha, elementos)
 
     def buscarProducto(self, nombre = "", precioMin = 0, precioMax = (2.0)**32-1, categoria = ""):
-        self._buscarProducto(self.raiz, nombre, precioMin, precioMax, categoria)
+        arboleAux = copy.deepcopy(self.raiz)
+        estados = []
+        self._buscarProducto(arboleAux,arboleAux, nombre, precioMin, precioMax, categoria, estados)
+        return arboleAux, estados
 
-    def _buscarProducto(self,nodo, nombre = "", precioMin = 0, precioMax = (2.0)**32-1, categoria = ""):
+    def _buscarProducto(self,nodo,nodoPadre, nombre = "", precioMin = 0, precioMax = (2.0)**32-1, categoria = "", estados = []):
         if nodo is not None:
             nodo.show = nodo.nombre in nombre and (precioMax>=nodo.precio >= precioMin) and nodo.categoria in categoria
-            self._buscarProducto(nodo.izquierda, nombre, precioMin, precioMax, categoria)
-            self._buscarProducto(nodo.derecha, nombre, precioMin, precioMax, categoria)
+            self._buscarProducto(nodo.izquierda, nodoPadre,nombre, precioMin, precioMax, categoria)
+            estados.append(copy.deepcopy(nodoPadre))
+            self._buscarProducto(nodo.derecha, nodoPadre,nombre, precioMin, precioMax, categoria)
+            estados.append(copy.deepcopy(nodoPadre))
     def buscarProductoId(self, id):
-        pass
+        arboleAux = copy.deepcopy(self.raiz)
+        estados = []
+        self._buscarProductoId(arboleAux,id)
+        return arboleAux, estados
     def _buscarProductoId(self, nodo,id):
         if nodo is not None:
             if(nodo.id == id):

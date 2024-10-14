@@ -20,24 +20,34 @@ class Service():
                 self.dataFrame = create_DataFrame(self.path)
             except Exception as e:
                 print(f"Error al leer/crear el CSV: {e}")
+        self.tree,self.estados = self.getTree()
 
     def insertarProducto(self, product):
         producto = Producto(product)
         self.dataFrame = add_row(producto,self.dataFrame)
         save_DataFrame(self.dataFrame, self.path)
-        return self.getTree()
+        self.estados = self.tree.insertar(*producto.toNpArray())
+        return self.tree, self.estados
 
     def cambiarProducto(self, id, product):
         newProduct = Producto(product)
         self.dataFrame = update_row(id, self.dataFrame, newProduct)
         save_DataFrame(self.dataFrame, self.path)
-        self.getTree()
+        self.tree, self.estados = self.getTree()
+        return self.tree
     
     def eliminarProducto(self, id):
         self.dataFrame = remove_row(id, self.dataFrame)
         save_DataFrame(self.dataFrame, self.path)
-        self.getTree()
+        self.tree, self.estados = self.getTree()
+        return self.tree, self.estados
     
+    def buscarProducto(self,nombre = "", precioMin = 0, precioMax = (2.0)**32-1, categoria = ""):
+        return self.tree.buscarProducto(nombre,precioMin,precioMax,categoria)
+         
+    def buscarProductoId(self, id):
+        return self.tree.buscarProductoId(id)
+
     def getTree(self):
         return self._toTree()
     
@@ -47,5 +57,5 @@ class Service():
             # Convertir cada fila a un objeto producto
             producto = Producto(row['id'],row['nombre'], row['precio'], row['stock'], row['categoria'])
             # Agregarlo al arbol
-            tree.insertar(producto)
-        return tree
+            estados = tree.insertar(producto)
+        return tree, estados

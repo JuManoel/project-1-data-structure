@@ -15,16 +15,20 @@ class Controller():
         self.service = Service(path)
 
     def insertarProducto(self, productoDict = {}):
-        tree = self.service.insertarProducto(productoDict)
-        return tree
-
+        return  self.service.insertarProducto(productoDict)
+        
     def modificarProducto(self, id, productoDict = {}):
-        tree = self.service.cambiarProducto(id, productoDict)
-        return tree
-
+        return self.service.cambiarProducto(id, productoDict)
     def eliminarProducto(self, id):
-        tree = self.service.eliminarProducto(id)
-        return tree
+        return  self.service.eliminarProducto(id)
     
-    def getTree(self):
-        return self.service.getTree()
+    def buscarProducto(self, nombre = "", precioMin = 0, precioMax = (2.0)**32-1, categoria = ""):
+        if(precioMin<0 or precioMax<=0):
+            return self.service.tree()
+        if(precioMax<precioMin):
+            precioMin,precioMax = precioMax,precioMin
+        return self.service.buscarProducto(nombre,precioMin,precioMax,categoria)
+    def buscarProductoId(self, id = 0):
+        if(id<0):
+            return self.service.tree()
+        return self.service.buscarProductoId(id)
