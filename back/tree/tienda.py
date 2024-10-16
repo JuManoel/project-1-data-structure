@@ -111,10 +111,9 @@ class TiendaAVL:
         arboleAux e nodoPadre sirve para no cambiar el arbole original
         la idea es solo va ocultar algunos nodos y no queremos modificar el arbol original
         """
-        arboleAux = copy.deepcopy(self.raiz) 
         estados = []
-        self._buscarProducto(arboleAux,arboleAux, nombre, precioMin, precioMax, categoria, estados)
-        return arboleAux, estados
+        self._buscarProducto(self.raiz,self.raiz, nombre, precioMin, precioMax, categoria, estados)
+        return self, estados
 
     def _buscarProducto(self,nodo,nodoPadre, nombre = "", precioMin = 0, precioMax = (2.0)**32-1, categoria = "", estados = []):
         if nodo is not None:
@@ -126,18 +125,20 @@ class TiendaAVL:
 
     def buscarProductoId(self, id):
         arboleAux = copy.deepcopy(self.raiz)
-        estados = [self.raiz]
-        self._buscarProductoId(arboleAux,id,estados)
-        return arboleAux, estados
+        estados = [arboleAux]
+        self._buscarProductoId(self.raiz,id,estados)
+        return self, estados
     
     def _buscarProductoId(self, nodo,id,estados):
         if nodo is not None:
-            nodo.show = nodo.id == id
+            nodo.show = (nodo.id == id)
+            print(nodo.show)
             estados.append(copy.deepcopy(self.raiz))
             self._buscarProductoId(nodo.izquierda,id,estados)
             self._buscarProductoId(nodo.derecha,id,estados)
     def cambiarProducto(self,id, producto):
-        pass
+        self._cambiarProducto(self.raiz,id,producto)
+        
     def _cambiarProducto(self,nodo,id,producto):
         if nodo is not None:
             if id < nodo.id:

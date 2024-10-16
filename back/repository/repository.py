@@ -66,8 +66,3 @@ def create_DataFrame(filename):
     columns = ['id','nombre','precio','stock','categoria']
     dataFrame = pd.DataFrame(columns = columns)
     return dataFrame
-
-# Apartir de aca voy a crear las opciones de busqueda en la base de datos
-# Aca todo va retornar o un Producto o una lista de Productos
-
-# --Pendiente--

@@ -37,3 +37,6 @@ class Controller():
         if(id<0):
             return self.service.tree()
         return self.service.buscarProductoId(id)
+    
+    def getTree(self):
+        return  self.service.tree

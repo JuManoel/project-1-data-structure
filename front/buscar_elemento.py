@@ -8,8 +8,9 @@ class buscar_Producto:
     
     def buscar(self, id):
         con = ctrl()
-        tree, estados = con.buscarProductoId(int(id))
-        print(len(estados))
+        return con.buscarProductoId(int(id))
+        
+        
 
 
     def busqueda(self, screen):
@@ -34,7 +35,7 @@ class buscar_Producto:
         button_cancel = pg.Rect(250, 120, 120, 40)
 
         done = False
-
+        tree,estados = ctrl().service.getTree()
         # Bucle principal del formulario
         while not done:
             screen.fill(Color)  # Limpia la pantalla
@@ -75,7 +76,7 @@ class buscar_Producto:
 
                     # Verificar si se hace clic en el botón de "Buscar" o "Cancelar"
                     if button_search.collidepoint(event.pos):
-                        self.buscar(input_box_id["text"])
+                        tree,estados = self.buscar(input_box_id["text"])
                         done=True
                     if button_cancel.collidepoint(event.pos):
                         done=True
@@ -88,3 +89,4 @@ class buscar_Producto:
                             input_box_id["text"] += event.unicode
 
             pg.display.flip()
+        return tree,estados
