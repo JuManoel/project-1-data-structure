@@ -88,6 +88,6 @@ otros datos del nodo
 Cuando el nodo es tiene la cantidad = 0 simplemente va a borrar el producto.
 Y cuando el producto tiene datos incorrectos el no hace ninguna modificacion en el arbol
 
-## Busqueda Avanzada (falta front)
+## Busqueda Avanzada (ok)
 El usuario tendra que ingresar datos como nombre, precio minimo, maximo y categoria
 despues el utiliza un recorido RID para ir cambiando los nodos
