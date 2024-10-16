@@ -11,7 +11,7 @@ class Controller():
         crea y me hare cargo de crear todo lo nescesario en repository y service
         ok?
     """
-    def __init__(self, path = "./"):
+    def __init__(self, path = "./productos.csv"):
         self.service = Service(path)
 
     def insertarProducto(self, productoDict = {}):

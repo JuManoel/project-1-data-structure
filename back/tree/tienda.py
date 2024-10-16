@@ -4,23 +4,22 @@ class TiendaAVL:
     def __init__(self):
         self.raiz = None
 
-    def insertar(self, id, nombre, precio, stock, categoria):
+    def insertar(self, producto):
         if self.raiz is None:
-            self.raiz = Producto(id, nombre, precio, stock, categoria)
+            self.raiz = producto
             return [self.raiz]
         else:
             estados = [copy.deepcopy(self.raiz)]
-            self.raiz = self._insertar(self.raiz, id, nombre, precio, stock, categoria, estados)
+            self.raiz = self._insertar(self.raiz, producto,estados)
             return estados
 
-    def _insertar(self, nodo, id, nombre, precio, stock, categoria, estados):
+    def _insertar(self, nodo, producto, estados):
         if not nodo:
-            return Producto(id, nombre, precio, stock, categoria)
-
-        if id < nodo.id:
-            nodo.izquierda = self._insertar(nodo.izquierda, id, nombre, precio, stock, categoria,estados)
-        elif id > nodo.id:
-            nodo.derecha = self._insertar(nodo.derecha, id, nombre, precio, stock, categoria, estados)
+            return producto
+        if producto.id < nodo.id:
+            nodo.izquierda = self._insertar(nodo.izquierda, producto, estados)
+        elif producto.id > nodo.id:
+            nodo.derecha = self._insertar(nodo.derecha, producto, estados)
         else:
             return nodo  # Los valores duplicados no están permitidos
         estados.append(copy.deepcopy(self.raiz))
@@ -33,20 +32,21 @@ class TiendaAVL:
         # Rotaciones para balancear el árbol
 
         # Caso 1: Rotación a la derecha
-        if balance > 1 and id < nodo.izquierda.id:
+        if balance > 1 and producto.id < nodo.izquierda.id:
             return self.rotacion_derecha(nodo)
 
         # Caso 2: Rotación a la izquierda
-        if balance < -1 and id > nodo.derecha.id:
+        
+        if balance < -1 and producto.id > nodo.derecha.id:
             return self.rotacion_izquierda(nodo)
 
         # Caso 3: Rotación izquierda-derecha
-        if balance > 1 and id > nodo.izquierda.id:
+        if balance > 1 and producto.id > nodo.izquierda.id:
             nodo.izquierda = self.rotacion_izquierda(nodo.izquierda)
             return self.rotacion_derecha(nodo)
 
         # Caso 4: Rotación derecha-izquierda
-        if balance < -1 and id < nodo.derecha.id:
+        if balance < -1 and producto.id < nodo.derecha.id:
             nodo.derecha = self.rotacion_derecha(nodo.derecha)
             return self.rotacion_izquierda(nodo)
 
@@ -94,20 +94,6 @@ class TiendaAVL:
             return 0
         return self.obtener_altura(nodo.izquierda) - self.obtener_altura(nodo.derecha)
 
-    # Función para buscar un valor en el árbol
-    # def buscar(self, valor):
-    #     return self._buscar(self.raiz, valor)
-
-    # def _buscar(self, nodo, valor):
-    #     if nodo is None:
-    #         return False
-    #     if valor == nodo.valor:
-    #         return True
-    #     elif valor < nodo.valor:
-    #         return self._buscar(nodo.izquierda, valor)
-    #     else:
-    #         return self._buscar(nodo.derecha, valor)
-
     # Recorrido en inorden
     def recorrido_inorden(self):
         elementos = []
@@ -121,7 +107,11 @@ class TiendaAVL:
             self._recorrido_inorden(nodo.derecha, elementos)
 
     def buscarProducto(self, nombre = "", precioMin = 0, precioMax = (2.0)**32-1, categoria = ""):
-        arboleAux = copy.deepcopy(self.raiz)
+        """
+        arboleAux e nodoPadre sirve para no cambiar el arbole original
+        la idea es solo va ocultar algunos nodos y no queremos modificar el arbol original
+        """
+        arboleAux = copy.deepcopy(self.raiz) 
         estados = []
         self._buscarProducto(arboleAux,arboleAux, nombre, precioMin, precioMax, categoria, estados)
         return arboleAux, estados
@@ -133,16 +123,29 @@ class TiendaAVL:
             estados.append(copy.deepcopy(nodoPadre))
             self._buscarProducto(nodo.derecha, nodoPadre,nombre, precioMin, precioMax, categoria)
             estados.append(copy.deepcopy(nodoPadre))
+
     def buscarProductoId(self, id):
         arboleAux = copy.deepcopy(self.raiz)
-        estados = []
-        self._buscarProductoId(arboleAux,id)
+        estados = [self.raiz]
+        self._buscarProductoId(arboleAux,id,estados)
         return arboleAux, estados
-    def _buscarProductoId(self, nodo,id):
+    
+    def _buscarProductoId(self, nodo,id,estados):
         if nodo is not None:
-            if(nodo.id == id):
-                nodo.show = True
+            nodo.show = nodo.id == id
+            estados.append(copy.deepcopy(self.raiz))
+            self._buscarProductoId(nodo.izquierda,id,estados)
+            self._buscarProductoId(nodo.derecha,id,estados)
+    def cambiarProducto(self,id, producto):
+        pass
+    def _cambiarProducto(self,nodo,id,producto):
+        if nodo is not None:
+            if id < nodo.id:
+                self._cambiarProducto(nodo.izquierda, id, producto)
+            elif id > nodo.id:
+                nodo.derecha = self._insertar(nodo.derecha, id, producto)
             else:
-                nodo.show = False
-                self._buscarProductoId(nodo.izquierda,id)
-                self._buscarProductoId(nodo.derecha,id)
+                hijos = [nodo.izquierda, nodo.derecha]
+                nodo = producto
+                nodo.izquierda = hijos[0]
+                nodo.derecha = hijos[1]

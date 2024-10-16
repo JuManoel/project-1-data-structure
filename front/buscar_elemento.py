@@ -1,9 +1,16 @@
 import pygame as pg
+from back.controller.controller import Controller as ctrl
 
 class buscar_Producto:
     def __init__(self):
         self.estado = "Buscar producto"
         pg.init()
+    
+    def buscar(self, id):
+        con = ctrl()
+        tree, estados = con.buscarProductoId(int(id))
+        print(len(estados))
+
 
     def busqueda(self, screen):
         font = pg.font.Font(None, 32)
@@ -68,6 +75,7 @@ class buscar_Producto:
 
                     # Verificar si se hace clic en el botón de "Buscar" o "Cancelar"
                     if button_search.collidepoint(event.pos):
+                        self.buscar(input_box_id["text"])
                         done=True
                     if button_cancel.collidepoint(event.pos):
                         done=True

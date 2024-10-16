@@ -22,8 +22,12 @@ def add_row(producto, dataFrame):
         Agrega una columna con la información del producto al DataFrame.
     """
     lastId = dataFrame['id'].max()
+    if lastId is None or str(lastId) == 'nan':
+        lastId = 0
     producto.id = lastId + 1
-    dataFrame.add(producto.toNpArray())
+    new_index = len(dataFrame)
+
+    dataFrame.loc[new_index] = producto.toNpArray()
     return dataFrame
 
 def remove_row(id, dataFrame):
@@ -32,7 +36,7 @@ def remove_row(id, dataFrame):
         param: dataFrame: DataFrame
         Elimina la fila con el id dado del DataFrame.
     """
-    dataFrame = dataFrame[dataFrame['id'] != id]
+    dataFrame = dataFrame[dataFrame.id != int(id)]
     return dataFrame
 
 def update_row(id, dataFrame, newProduct):

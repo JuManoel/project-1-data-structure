@@ -1,5 +1,6 @@
 import  pygame as pg
 from front.inicio import *
+from back.controller.controller import Controller as ctrl
 
 class  modificar:
     def __init__(self):

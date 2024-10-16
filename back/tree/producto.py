@@ -14,39 +14,9 @@ stock : numpy.uint32
     The stock quantity of the product.
 categoria : str
     The category of the product.
-
-Methods:
---------
-__init__(self, nombre, precio, stock, categoria)
-    Initializes a new instance of the Producto class.
 """
-    def __init__(self, nombre, precio, stock, categoria):
-        """
-        Initializes a new instance of the Producto class.
-
-        Parameters:
-        -----------
-        nombre : str
-            The name of the product.
-        precio : float
-            The price of the product. It will be converted to numpy.float32.
-        stock : int
-            The stock quantity of the product. It will be converted to numpy.uint32.
-        categoria : str
-            The category of the product.
-
-        Returns:
-        --------
-        None
-        """
-        self.id = uint32(0)
-        self.nombre = nombre
-        self.precio = float32(precio)
-        self.stock = uint32(stock)
-        self.categoria = categoria
-        self.show = True
         
-    def __init__(self, id, nombre, precio, stock, categoria):
+    def __init__(self, id=0, nombre="", precio=0.0, cantidad=1, categoria=""):
         """
         Initializes a new instance of the Producto class.
 
@@ -65,12 +35,22 @@ __init__(self, nombre, precio, stock, categoria)
         --------
         None
         """
-        self.__init__(nombre, precio, stock, categoria)
         self.id = uint32(id)
+        self.nombre = str(nombre)
+        self.precio = float32(precio)
+        self.cantidad = uint32(cantidad)
+        self.categoria = str(categoria)
+        self.izquierda = None
+        self.derecha = None
+        self.altura = 1
     
-    def __init__(self, dict):
+    def initDict(self, dict):
         try:
-            self.__init__(dict['nombre'], dict['precio'], dict['stock'], dict['categoria'])
+            self.id = uint32(0)
+            self.nombre = str(dict["nombre"])
+            self.precio = float32(dict["precio"])
+            self.cantidad = uint32(dict["cantidad"])
+            self.categoria = str(dict["categoría"])
         except KeyError:
             try:
                 self.__init__(**dict)
@@ -79,11 +59,11 @@ __init__(self, nombre, precio, stock, categoria)
 
 
     def __str__(self):
-        return f"ID: {self.id}, Nombre: {self.nombre}, Precio: {self.precio}, Stock: {self.stock}, Categoria: {self.categoria}"
+        return f"id: {self.id}, nombre: {self.nombre}, precio: {self.precio}, cantidad: {self.cantidad}, categoria: {self.categoria}"
 
 
     def toNpArray(self):
-        return array([self.id, self.nombre, self.precio, self.stock, self.categoria])
+        return array([self.id, self.nombre, self.precio, self.cantidad, self.categoria])
     
     def toDict(self):
-        return {'id': self.id, 'nombre': self.nombre, 'precio': self.precio,'stock': self.stock, 'categoria': self.categoria}
+        return {'id': self.id, 'nombre': self.nombre, 'precio': self.precio,'cantidad': self.cantidad, 'categoria': self.categoria}

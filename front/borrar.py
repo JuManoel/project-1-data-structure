@@ -1,10 +1,15 @@
 import pygame as pg
+from back.controller.controller import Controller as ctrl
 
 
 class borrar:
     def __init__(self):
         self.estado = "Borrar producto"
         pg.init()
+
+    def borrar(self, id):
+        con = ctrl()
+        tree, estados = con.eliminarProducto(id)
 
     def borrar_elemento(self, screen):
         font = pg.font.Font(None, 32)
@@ -68,7 +73,7 @@ class borrar:
 
                     # Verificar si se hace clic en el botón de "Buscar"
                     if button_search.collidepoint(event.pos):
-                        print(f'Buscando producto con ID: {input_box_id["text"]}')
+                        self.borrar(input_box_id["text"])
                         # Aquí puedes agregar la lógica de búsqueda
 
                     # Verificar si se hace clic en el botón de "Cancelar"

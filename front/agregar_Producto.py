@@ -1,11 +1,15 @@
 import pygame as pg
 from front.inicio import *
-
+from back.controller.controller import Controller as ctrl
 class agregar_Producto:
     def __init__(self):
         self.estado = "Agregar producto"
         pg.init()
         self.screen = pg.display.set_mode((1000,600))  # Inicializa la pantalla aquí, si es necesario
+
+    def guardar(self, json): 
+        con = ctrl()
+        tree, estados = con.insertarProducto(json)
 
     def formulario(self, screen):
         font = pg.font.Font(None, 32)
@@ -65,8 +69,19 @@ class agregar_Producto:
                         else:
                             box["active"] = False
                     if button_save.collidepoint(event.pos):
+                        #agregar productos?
+                        json = {
+                            "nombre":None,
+                            "precio":None,
+                            "cantidad": None,
+                            "categoria":None
+                        }
                         for box in input_boxes:
-                            print(f'{box["title"]} agregado: {box["text"]}')  # Aquí puedes guardar los datos
+                            if(box["text"] == 'categoría'):
+                                json["categoria"] = box["text"]
+                            else:
+                                json[box["title"].lower()] = box["text"]
+                        self.guardar(json)  # Aquí puedes guardar los datos
                         done = True  
                     elif button_cancel.collidepoint(event.pos):
                         done = True  

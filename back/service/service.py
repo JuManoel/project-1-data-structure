@@ -11,7 +11,7 @@ class Service():
         actualizable, ya que si adionamos una nueva funcion en repository o controller
         todo que tenemos que hacer es solo adicionar una nueva en essa clase
     """
-    def __init__(self, path = "./"):
+    def __init__(self, path = "./productos.csv"):
         self.path = path
         try:
             self.dataFrame = read_csv(self.path)
@@ -23,18 +23,21 @@ class Service():
         self.tree,self.estados = self.getTree()
 
     def insertarProducto(self, product):
-        producto = Producto(product)
+        producto = Producto()
+        producto.initDict(product)
         self.dataFrame = add_row(producto,self.dataFrame)
         save_DataFrame(self.dataFrame, self.path)
-        self.estados = self.tree.insertar(*producto.toNpArray())
+        self.estados = self.tree.insertar(producto)
         return self.tree, self.estados
 
     def cambiarProducto(self, id, product):
-        newProduct = Producto(product)
+        newProduct = Producto()
+        newProduct.initDict(product)
+        newProduct.id = id
+        self.tree.cambiarProducto(id,newProduct)
         self.dataFrame = update_row(id, self.dataFrame, newProduct)
         save_DataFrame(self.dataFrame, self.path)
-        self.tree, self.estados = self.getTree()
-        return self.tree
+        return self.tree, [self.tree]
     
     def eliminarProducto(self, id):
         self.dataFrame = remove_row(id, self.dataFrame)
@@ -53,9 +56,9 @@ class Service():
     
     def _toTree(self):
         tree = TiendaAVL()
+        estados = []
         for index, row in self.dataFrame.iterrows():
             # Convertir cada fila a un objeto producto
             producto = Producto(row['id'],row['nombre'], row['precio'], row['stock'], row['categoria'])
-            # Agregarlo al arbol
             estados = tree.insertar(producto)
         return tree, estados
