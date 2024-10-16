@@ -117,7 +117,7 @@ class TiendaAVL:
 
     def _buscarProducto(self,nodo,nodoPadre, nombre = "", precioMin = 0, precioMax = (2.0)**32-1, categoria = "", estados = []):
         if nodo is not None:
-            nodo.show = nodo.nombre in nombre and (precioMax>=nodo.precio >= precioMin) and nodo.categoria in categoria
+            nodo.show = (nombre in nodo.nombre or nodo.nombre in nombre) and (precioMax>=nodo.precio >= precioMin) and (categoria in nodo.categoria or nodo.categoria in categoria)
             self._buscarProducto(nodo.izquierda, nodoPadre,nombre, precioMin, precioMax, categoria)
             estados.append(copy.deepcopy(nodoPadre))
             self._buscarProducto(nodo.derecha, nodoPadre,nombre, precioMin, precioMax, categoria)

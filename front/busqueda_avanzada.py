@@ -6,18 +6,11 @@ class BusquedaAvanzada:
         self.estado = "Busqueda Avanzada"
         pg.init()
 
-    def buscar(self, nombre=None, categoria=None, precio_min=None, precio_max=None):
+
+
+    def buscar(self, nombre="", categoria="", precio_min=0, precio_max=2**32):
         con = ctrl()
-        # Aquí deberías agregar la lógica de búsqueda avanzada
-        if nombre:
-            resultados = con.buscarProductoPorNombre(nombre)
-        elif categoria:
-            resultados = con.buscarProductoPorCategoria(categoria)
-        elif precio_min is not None and precio_max is not None:
-            resultados = con.buscarProductoPorRangoPrecio(precio_min, precio_max)
-        
-        for producto in resultados:
-            print(producto)  # Muestra los resultados (luego se mostrará en pantalla)
+        return con.buscarProducto(nombre=nombre,precioMin=precio_min,precioMax=precio_max,categoria=categoria)
 
     def busqueda(self, screen):
         font = pg.font.Font(None, 32)
@@ -47,6 +40,7 @@ class BusquedaAvanzada:
         done = False
 
         # Bucle principal del formulario
+        tree,estados=ctrl().service.getTree()
         while not done:
             screen.fill(Color)  # Limpia la pantalla
 
@@ -90,7 +84,7 @@ class BusquedaAvanzada:
                         categoria = input_box_categoria["text"] if input_box_categoria["text"] else None
                         precio_min = float(input_box_precio_min["text"]) if input_box_precio_min["text"] else None
                         precio_max = float(input_box_precio_max["text"]) if input_box_precio_max["text"] else None
-                        self.buscar(nombre, categoria, precio_min, precio_max)
+                        tree, estados = self.buscar(nombre, categoria, precio_min, precio_max)
                         done = True
 
                     if button_cancel.collidepoint(event.pos):
@@ -106,3 +100,4 @@ class BusquedaAvanzada:
                                 input_box["text"] += event.unicode
 
             pg.display.flip()
+        return tree,estados
