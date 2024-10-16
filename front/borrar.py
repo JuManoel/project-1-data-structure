@@ -74,6 +74,7 @@ class borrar:
                     # Verificar si se hace clic en el botón de "Buscar"
                     if button_search.collidepoint(event.pos):
                         self.borrar(input_box_id["text"])
+                        done = True
                         # Aquí puedes agregar la lógica de búsqueda
 
                     # Verificar si se hace clic en el botón de "Cancelar"

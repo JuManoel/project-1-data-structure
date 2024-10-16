@@ -3,12 +3,32 @@ from front.agregar_Producto import agregar_Producto
 from front.modificar import modificar
 from front.borrar import borrar
 from front.buscar_elemento import buscar_Producto
+from back.controller.controller import Controller as ctrl
 class Inicio:
     def __init__(self):
         self.estado = "menu"  # Estado inicial: menú principal
         pg.init()  # Inicializa Pygame al inicio del programa
         self.screen = pg.display.set_mode((1000, 600))  # Configuración de la pantalla
         pg.display.set_caption("Menu")
+
+
+    def dibujar_tienda_avl(self, nodo, x, y, offset, screen):
+        if nodo is not None:
+            # Dibujar el nodo
+            pg.draw.circle(screen, (255, 0, 0), (x, y), 20)  # Nodo como círculo blanco
+            font = pg.font.Font(None, 24)
+            id_text = font.render(str(nodo.id), True, (0, 0, 0))  # El texto del ID del producto
+            screen.blit(id_text, (x - 10, y - 10))  # Centrar el ID en el nodo
+            
+            # Dibujar líneas hacia los hijos
+            if nodo.izquierda is not None:
+                pg.draw.line(screen, (0, 255, 0), (x, y), (x - offset, y + 80))  # Línea al hijo izquierdo
+                self.dibujar_tienda_avl(nodo.izquierda, x - offset, y + 80, offset // 2, screen)
+            if nodo.derecha is not None:
+                pg.draw.line(screen, (0, 255, 0), (x, y), (x + offset, y + 80))  # Línea al hijo derecho
+                self.dibujar_tienda_avl(nodo.derecha, x + offset, y + 80, offset // 2, screen)
+
+
 
     def menu(self):
         # Colores
@@ -47,6 +67,9 @@ class Inicio:
             texto_rect = texto_renderizado.get_rect(center=(pos[0] + cuadro_ancho // 2, pos[1] + cuadro_alto // 2))
             self.screen.blit(texto_renderizado, texto_rect)
 
+        if self.tiendaAVL and self.tiendaAVL.raiz:
+            self.dibujar_tienda_avl(self.tiendaAVL.raiz, self.screen.get_width() - 750, 100, 150, self.screen)
+
         return posiciones
 
     def validar_mouse(self, mouse_pos, posiciones):
@@ -61,6 +84,7 @@ class Inicio:
     def run(self):
         corriendo = True
         while corriendo:
+            self.tiendaAVL, estados = ctrl().service.getTree()
             if self.estado == "menu":
                 posiciones = self.menu()
             if self.estado == "agregar_producto":

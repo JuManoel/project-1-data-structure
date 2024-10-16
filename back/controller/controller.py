@@ -14,7 +14,12 @@ class Controller():
     def __init__(self, path = "./productos.csv"):
         self.service = Service(path)
 
+    """
+    recibe un dicionario que tendra los datos de lo producto
+    retorna una obj
+    """
     def insertarProducto(self, productoDict = {}):
+        
         return  self.service.insertarProducto(productoDict)
         
     def modificarProducto(self, id, productoDict = {}):
