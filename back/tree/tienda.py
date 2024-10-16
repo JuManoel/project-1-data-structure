@@ -117,7 +117,7 @@ class TiendaAVL:
 
     def _buscarProducto(self,nodo,nodoPadre, nombre = "", precioMin = 0, precioMax = (2.0)**32-1, categoria = "", estados = []):
         if nodo is not None:
-            nodo.show = (nombre in nodo.nombre or nodo.nombre in nombre) and (precioMax>=nodo.precio >= precioMin) and (categoria in nodo.categoria or nodo.categoria in categoria)
+            nodo.show = (nombre.lower() in nodo.nombre.lower() or nodo.nombre.lower() in nombre.lower()) and (precioMax>=nodo.precio >= precioMin) and (categoria.lower() in nodo.categoria.lower() or nodo.categoria.lower() in categoria.lower())
             self._buscarProducto(nodo.izquierda, nodoPadre,nombre, precioMin, precioMax, categoria)
             estados.append(copy.deepcopy(nodoPadre))
             self._buscarProducto(nodo.derecha, nodoPadre,nombre, precioMin, precioMax, categoria)
@@ -144,7 +144,7 @@ class TiendaAVL:
             if id < nodo.id:
                 self._cambiarProducto(nodo.izquierda, id, producto)
             elif id > nodo.id:
-                nodo.derecha = self._insertar(nodo.derecha, id, producto)
+                nodo.derecha = self._cambiarProducto(nodo.derecha, id, producto)
             else:
                 hijos = [nodo.izquierda, nodo.derecha]
                 otrosDatos = [nodo.altura, nodo.show]

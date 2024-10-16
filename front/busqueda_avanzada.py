@@ -6,8 +6,6 @@ class BusquedaAvanzada:
         self.estado = "Busqueda Avanzada"
         pg.init()
 
-
-
     def buscar(self, nombre="", categoria="", precio_min=0, precio_max=2**32):
         con = ctrl()
         return con.buscarProducto(nombre=nombre,precioMin=precio_min,precioMax=precio_max,categoria=categoria)
@@ -22,9 +20,9 @@ class BusquedaAvanzada:
         Color = (9, 12, 155) # Fondo azul oscuro
 
         # Input boxes para los criterios de búsqueda
-        # Ajusta las posiciones de las cajas de entrada para mayor separación
+        # Ajusta las posiciones de las cajas de entrada 
         input_box_nombre = {"rect": pg.Rect(100, 50, 300, 30), "text": '', "active": False, "title": "Nombre del Producto"}
-        input_box_categoria = {"rect": pg.Rect(100, 110, 300, 30), "text": '', "active": False, "title": "Categoría"}
+        input_box_categoria = {"rect": pg.Rect(100, 120, 300, 30), "text": '', "active": False, "title": "Categoría"}
         input_box_precio_min = {"rect": pg.Rect(100, 180, 140, 30), "text": '', "active": False, "title": "Precio Mínimo"}  # Aumentar el espacio entre las cajas
         input_box_precio_max = {"rect": pg.Rect(260, 180, 140, 30), "text": '', "active": False, "title": "Precio Máximo"}  # Aumentar el espacio entre las cajas
 

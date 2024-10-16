@@ -103,7 +103,7 @@ class Inicio:
                 self.estado = "menu"  # Cambia el estado a "menu" cuando termine la ventana agregar_Producto
             if self.estado == "Modificar elemento":
                modi=modificar()
-               modi.modificacion(self.screen)
+               self.tiendaAVL, estados = modi.modificacion(self.screen)
                self.estado = "menu"
             if self.estado=="borrar":
                 suprimir=borrar()

@@ -1,7 +1,8 @@
 id,nombre,precio,stock,categoria
 2,queso,15000.0,20,lacteos
-3,pan,15000.0,20,trigo y derivados
+3,Cristian Marin,50000.0,1,blanco
 4,arepas,5000.0,30,maiz
 6,Arroz,3000.0,20,cereales
 7,Cristian,60000.0,1,negro
 8,Cesar,1600000.0,1,Professor
+9,santiago,300.0,50,quintero

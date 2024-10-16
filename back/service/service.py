@@ -57,6 +57,7 @@ class Service():
         elif(newProduct.precio <= 0 or newProduct.cantidad <=0):
             return self.getTree()
         self.tree.cambiarProducto(id,newProduct)
+        print(newProduct)
         self.dataFrame = update_row(id, self.dataFrame, newProduct)
         save_DataFrame(self.dataFrame, self.path)
         return self.tree, [self.tree]
