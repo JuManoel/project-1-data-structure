@@ -36,7 +36,6 @@ class buscar_Producto:
         button_advanced = pg.Rect(400, 120, 160, 40)  # Botón de búsqueda avanzada
 
         done = False
-        tree,estados = ctrl().service.getTree()
         # Bucle principal del formulario
         tree,estados=ctrl().service.getTree()
         while not done:
@@ -88,7 +87,7 @@ class buscar_Producto:
                         done = True
                     if button_advanced.collidepoint(event.pos):  # Al hacer clic en "Avanzado"
                         busqueda_avanzada = BusquedaAvanzada()
-                        busqueda_avanzada.busqueda(screen)  # Dirigir a la pantalla de búsqueda avanzada
+                        tree,estados = busqueda_avanzada.busqueda(screen)  # Dirigir a la pantalla de búsqueda avanzada
                         done = True
                     
 
