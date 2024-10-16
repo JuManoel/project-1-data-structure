@@ -14,20 +14,26 @@ class Inicio:
 
     def dibujar_tienda_avl(self, nodo, x, y, offset, screen):
         if nodo is not None:
-            # Dibujar el nodo
-            pg.draw.circle(screen, (255, 0, 0), (x, y), 20)  # Nodo como círculo blanco
-            font = pg.font.Font(None, 24)
-            id_text = font.render(str(nodo.id), True, (0, 0, 0))  # El texto del ID del producto
-            screen.blit(id_text, (x - 10, y - 10))  # Centrar el ID en el nodo
+            radio_circulo = 10  
+            pg.draw.circle(screen, (0, 255, 0), (x, y), radio_circulo)  
+            font = pg.font.Font(None, 18)  
+            id_text = font.render(str(nodo.id), True, (0, 0, 0))  
+            screen.blit(id_text, (x - 5, y - 5))  
             
-            # Dibujar líneas hacia los hijos
+            distancia_vertical = 50  
+            radio_circulo = 10  
+            
             if nodo.izquierda is not None:
-                pg.draw.line(screen, (0, 255, 0), (x, y), (x - offset, y + 80))  # Línea al hijo izquierdo
-                self.dibujar_tienda_avl(nodo.izquierda, x - offset, y + 80, offset // 2, screen)
+                pg.draw.line(screen, (0, 0, 255), 
+                             (x - radio_circulo, y + radio_circulo),  
+                             (x - offset + radio_circulo, y + distancia_vertical - radio_circulo))  
+                self.dibujar_tienda_avl(nodo.izquierda, x - offset, y + distancia_vertical, offset // 2, screen)
+            
             if nodo.derecha is not None:
-                pg.draw.line(screen, (0, 255, 0), (x, y), (x + offset, y + 80))  # Línea al hijo derecho
-                self.dibujar_tienda_avl(nodo.derecha, x + offset, y + 80, offset // 2, screen)
-
+                pg.draw.line(screen, (0, 0, 255), 
+                             (x + radio_circulo, y + radio_circulo),  
+                             (x + offset - radio_circulo, y + distancia_vertical - radio_circulo))  
+                self.dibujar_tienda_avl(nodo.derecha, x + offset, y + distancia_vertical, offset // 2, screen)
 
 
     def menu(self):
