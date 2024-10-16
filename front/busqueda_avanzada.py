@@ -29,10 +29,12 @@ class BusquedaAvanzada:
         Color = (9, 12, 155) # Fondo azul oscuro
 
         # Input boxes para los criterios de búsqueda
+        # Ajusta las posiciones de las cajas de entrada para mayor separación
         input_box_nombre = {"rect": pg.Rect(100, 50, 300, 30), "text": '', "active": False, "title": "Nombre del Producto"}
-        input_box_categoria = {"rect": pg.Rect(100, 100, 300, 30), "text": '', "active": False, "title": "Categoría"}
-        input_box_precio_min = {"rect": pg.Rect(100, 160, 140, 30), "text": '', "active": False, "title": "Precio Mínimo"}  # Espacio aumentado
-        input_box_precio_max = {"rect": pg.Rect(260, 160, 140, 30), "text": '', "active": False, "title": "Precio Máximo"}  # Espacio aumentado
+        input_box_categoria = {"rect": pg.Rect(100, 110, 300, 30), "text": '', "active": False, "title": "Categoría"}
+        input_box_precio_min = {"rect": pg.Rect(100, 180, 140, 30), "text": '', "active": False, "title": "Precio Mínimo"}  # Aumentar el espacio entre las cajas
+        input_box_precio_max = {"rect": pg.Rect(260, 180, 140, 30), "text": '', "active": False, "title": "Precio Máximo"}  # Aumentar el espacio entre las cajas
+
 
         # Colores de los cuadros de texto
         color_inactive = (128, 128, 128)

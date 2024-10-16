@@ -56,12 +56,18 @@ class buscar_Producto:
             # Dibuja los botones
             pg.draw.rect(screen, VERDE, button_search)  # Botón Buscar en verde
             pg.draw.rect(screen, ROJO, button_cancel)   # Botón Cancelar en rojo
+            pg.draw.rect(screen, (0, 0, 255), button_advanced)  # Botón Búsqueda Avanzada en azul
+
 
             # Texto en los botones
             search_surface = font.render('Buscar', True, (255, 255, 255))
             cancel_surface = font.render('Cancelar', True, (255, 255, 255))
+            advanced_surface = font.render('Avanzado', True, (255, 255, 255))
+
             screen.blit(search_surface, (button_search.x + 10, button_search.y + 5))
             screen.blit(cancel_surface, (button_cancel.x + 10, button_cancel.y + 5))
+            screen.blit(advanced_surface, (button_advanced.x + 10, button_advanced.y + 5))
+
 
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -79,6 +85,10 @@ class buscar_Producto:
                         tree,estados = self.buscar(input_box_id["text"])
                         done=True
                     if button_cancel.collidepoint(event.pos):
+                        done = True
+                    if button_advanced.collidepoint(event.pos):  # Al hacer clic en "Avanzado"
+                        busqueda_avanzada = BusquedaAvanzada()
+                        busqueda_avanzada.busqueda(screen)  # Dirigir a la pantalla de búsqueda avanzada
                         done = True
                     
 
