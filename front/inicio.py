@@ -15,7 +15,10 @@ class Inicio:
     def dibujar_tienda_avl(self, nodo, x, y, offset, screen):
         if nodo is not None:
             radio_circulo = 10  
-            pg.draw.circle(screen, (0, 255, 0), (x, y), radio_circulo)  
+            if(nodo.show):
+                pg.draw.circle(screen, (0, 255, 0), (x, y), radio_circulo)  
+            else:
+                pg.draw.circle(screen, (255, 0, 0), (x, y), radio_circulo)  
             font = pg.font.Font(None, 18)  
             id_text = font.render(str(nodo.id), True, (0, 0, 0))  
             screen.blit(id_text, (x - 5, y - 5))  
@@ -89,8 +92,9 @@ class Inicio:
            self.estado="Buscar elemento" 
     def run(self):
         corriendo = True
+        self.tiendaAVL = ctrl().getTree()
         while corriendo:
-            self.tiendaAVL, estados = ctrl().service.getTree()
+            
             if self.estado == "menu":
                 posiciones = self.menu()
             if self.estado == "agregar_producto":
@@ -107,7 +111,7 @@ class Inicio:
                 self.estado="menu"
             if self.estado=="Buscar elemento":
                 buscar=buscar_Producto()
-                buscar.busqueda(self.screen)
+                self.tiendaAVL,estados = buscar.busqueda(self.screen)
                 self.estado="menu"
 
             for event in pg.event.get():

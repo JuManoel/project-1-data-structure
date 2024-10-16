@@ -9,7 +9,11 @@ class buscar_Producto:
 
     def buscar(self, id):
         con = ctrl()
-        return con.buscarProductoId(id)
+        return con.buscarProductoId(int(id))
+        
+        
+
+
     def busqueda(self, screen):
         font = pg.font.Font(None, 32)
         title_font = pg.font.Font(None, 28)
@@ -32,7 +36,7 @@ class buscar_Producto:
         button_advanced = pg.Rect(400, 120, 160, 40)  # Botón de búsqueda avanzada
 
         done = False
-
+        tree,estados = ctrl().service.getTree()
         # Bucle principal del formulario
         tree,estados=ctrl().service.getTree()
         while not done:
@@ -72,9 +76,8 @@ class buscar_Producto:
 
                     # Verificar si se hace clic en el botón de "Buscar", "Cancelar" o "Avanzado"
                     if button_search.collidepoint(event.pos):
-                        
-                        tree,estados=self.buscar(input_box_id["text"])
-                        done = True
+                        tree,estados = self.buscar(input_box_id["text"])
+                        done=True
                     if button_cancel.collidepoint(event.pos):
                         done = True
                     
@@ -88,6 +91,4 @@ class buscar_Producto:
                             input_box_id["text"] += event.unicode
 
             pg.display.flip()
-
         return tree,estados
-
