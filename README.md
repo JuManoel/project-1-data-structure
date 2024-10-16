@@ -23,8 +23,7 @@ Este proyecto se centra en la implementación y manipulación de estructuras de 
 
 ## Agradecimientos especiales
 1. ChatGPT, TabNine
-2. Jacobo Arroyave
-3. Jairo y Cesar
+2. Jairo y Cesar
 
 ## Forma de organizacion
 1. Cristian: todo lo que esta en la carpeta ./front es de cristian
@@ -37,4 +36,58 @@ lo que genero unas cierta dificuldades principalmente en la hora de hacer screen
 lo que funciona aca, tiene que funcionar con otro motor grafico. Pero hacer siempre la
 primera connecion no es lo mas facil, lo que genero algunas horas de debug
 
-## Logica de guardado del Arbol
+## Logica de guardado del Arbol (ok)
+No guardamos el arbol como tal, si no que guardamos los productos
+si no que guardamos como una lista de productos en un csv llamado
+./productos.csv Elejomos de esa manera por ser mas simple y mas facil
+mantenimiento y actualizacion.
+
+id,nombre,precio,stock,categoria
+2,queso,15000.0,20,lacteos
+3,pan,15000.0,20,trigo y derivados
+4,arepas,5000.0,30,maiz
+
+## Logica para adicionar productos (ok)
+La logica para eso hicimos 3 passos.
+1. Recibimos los datos de los productos
+2. creamos el producto y lo insertamos en el arbol
+3. guardamos la lista de todos los productos
+Durante el processo de inserccion hacemos las rotaciones y vamos guardando
+todos los estados de rotacion en una variable Estados. Esa variable tendra la 
+funcion de guardar "los frames" de las rotaciones de los arboles
+retornamos el arvol y los estados.
+El metodo valida tambien si los datos del producto estan correctos, o sea
+si no hay precios o cantidad menores que 0
+
+## Logica para buscar producto por ID (ok)
+Por ser un arbol binario de busqueda lo hacemos es recorrer todos los nodos
+como en inorden, y vamos activando y desactivando los nodos para que lo veamos cambiando
+de color y indentifique cual es nodo que buscamos
+
+## Borrar un nodo (ok)
+Para borrar el nodo lo que hacemos es primero borrar el de la base de datos
+y despues rearmar el arbol con la nueva base de datos.
+Elejimos eso para que no nos difilcultara con la parte de rotaciones y con miedo de
+perder algun nodo o insertar en un ludar indevido.
+Pensava en un otro modo donde lo borramos de una vez en el arbol
+Funcionaria asi: 
+1. cojiamos el nodo padre (1)
+2. guardariamos los hijos del nodo (2,3)
+3. cambiarimaos el cojiamos del hijo de (1) que queremos borrar y 
+pondriamos (2) o (3) como nuevo hijo.
+4. el hijo sobrande lo volveriamos a insertar.
+
+Pero como dije, me dava algo de miedo que de la nada se perdiera un nodo
+entonces por mantener la integridad del arbol prefiero re hacer todo el arbol
+
+## Modificar un nodo (falta front)
+Primero el usuario tiene que elejir el Id del nodo que el quiere y despues poner
+los datos que quieres cambiar, como se fuera crear un nuevo producto
+el hace la busqueda en el arbol, y cambia las referencias de los hijos y los
+otros datos del nodo
+Cuando el nodo es tiene la cantidad = 0 simplemente va a borrar el producto.
+Y cuando el producto tiene datos incorrectos el no hace ninguna modificacion en el arbol
+
+## Busqueda Avanzada (falta front)
+El usuario tendra que ingresar datos como nombre, precio minimo, maximo y categoria
+despues el utiliza un recorido RID para ir cambiando los nodos

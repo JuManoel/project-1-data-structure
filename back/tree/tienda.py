@@ -146,6 +146,9 @@ class TiendaAVL:
                 nodo.derecha = self._insertar(nodo.derecha, id, producto)
             else:
                 hijos = [nodo.izquierda, nodo.derecha]
+                otrosDatos = [nodo.altura, nodo.show]
                 nodo = producto
                 nodo.izquierda = hijos[0]
                 nodo.derecha = hijos[1]
+                nodo.altura = otrosDatos[0]
+                nodo.show = otrosDatos[1]

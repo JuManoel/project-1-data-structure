@@ -43,6 +43,7 @@ categoria : str
         self.izquierda = None
         self.derecha = None
         self.altura = 1
+        self.show = True
     
     def initDict(self, dict):
         try:

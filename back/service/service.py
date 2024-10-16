@@ -25,15 +25,21 @@ class Service():
     def insertarProducto(self, product):
         producto = Producto()
         producto.initDict(product)
+        if(producto.cantidad <=0 or producto.precio <= 0):
+            return self.getTree()
         self.dataFrame = add_row(producto,self.dataFrame)
         save_DataFrame(self.dataFrame, self.path)
         self.estados = self.tree.insertar(producto)
         return self.tree, self.estados
-
+ 
     def cambiarProducto(self, id, product):
         newProduct = Producto()
         newProduct.initDict(product)
         newProduct.id = id
+        if(newProduct.cantidad == 0):
+            return self.eliminarProducto(id)
+        elif(newProduct.precio <= 0 or newProduct.cantidad <=0):
+            return self.getTree()
         self.tree.cambiarProducto(id,newProduct)
         self.dataFrame = update_row(id, self.dataFrame, newProduct)
         save_DataFrame(self.dataFrame, self.path)
