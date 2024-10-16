@@ -1,17 +1,15 @@
 import pygame as pg
 from back.controller.controller import Controller as ctrl
+from front.busqueda_avanzada import BusquedaAvanzada  # Asegúrate de tener la clase BusquedaAvanzada en este archivo o ruta
 
 class buscar_Producto:
     def __init__(self):
         self.estado = "Buscar producto"
         pg.init()
-    
+
     def buscar(self, id):
         con = ctrl()
-        tree, estados = con.buscarProductoId(int(id))
-        print(len(estados))
-
-
+        return con.buscarProductoId(id)
     def busqueda(self, screen):
         font = pg.font.Font(None, 32)
         title_font = pg.font.Font(None, 28)
@@ -20,7 +18,6 @@ class buscar_Producto:
         VERDE = (0, 200, 0)  # Color verde para el botón de "Buscar"
         ROJO = (200, 0, 0)   # Color rojo para el botón de "Cancelar"
         Color = (9, 12, 155) # Fondo azul oscuro
-        screen.fill(Color)
 
         # Input box para el ID del producto
         input_box_id = {"rect": pg.Rect(100, 50, 300, 32), "text": '', "active": False, "title": "ID del Producto"}
@@ -32,10 +29,12 @@ class buscar_Producto:
         # Botones
         button_search = pg.Rect(100, 120, 120, 40)
         button_cancel = pg.Rect(250, 120, 120, 40)
+        button_advanced = pg.Rect(400, 120, 160, 40)  # Botón de búsqueda avanzada
 
         done = False
 
         # Bucle principal del formulario
+        tree,estados=ctrl().service.getTree()
         while not done:
             screen.fill(Color)  # Limpia la pantalla
 
@@ -50,15 +49,13 @@ class buscar_Producto:
             pg.draw.rect(screen, color, input_box_id["rect"], 2)
             screen.blit(txt_surface, (input_box_id["rect"].x + 5, input_box_id["rect"].y + 5))
 
-            # Dibuja el botón de "Buscar" (Verde)
+            # Dibuja los botones
             pg.draw.rect(screen, VERDE, button_search)  # Botón Buscar en verde
+            pg.draw.rect(screen, ROJO, button_cancel)   # Botón Cancelar en rojo
 
-            # Dibuja el botón de "Cancelar" (Rojo)
-            pg.draw.rect(screen, ROJO, button_cancel)  # Botón Cancelar en rojo
-
-            # Texto en los botones, en blanco
-            search_surface = font.render('Buscar', True, (255, 255, 255))  # Texto en blanco
-            cancel_surface = font.render('Cancelar', True, (255, 255, 255))  # Texto en blanco
+            # Texto en los botones
+            search_surface = font.render('Buscar', True, (255, 255, 255))
+            cancel_surface = font.render('Cancelar', True, (255, 255, 255))
             screen.blit(search_surface, (button_search.x + 10, button_search.y + 5))
             screen.blit(cancel_surface, (button_cancel.x + 10, button_cancel.y + 5))
 
@@ -73,14 +70,17 @@ class buscar_Producto:
                     else:
                         input_box_id["active"] = False
 
-                    # Verificar si se hace clic en el botón de "Buscar" o "Cancelar"
+                    # Verificar si se hace clic en el botón de "Buscar", "Cancelar" o "Avanzado"
                     if button_search.collidepoint(event.pos):
-                        self.buscar(input_box_id["text"])
-                        done=True
+                        
+                        tree,estados=self.buscar(input_box_id["text"])
+                        done = True
                     if button_cancel.collidepoint(event.pos):
-                        done=True
+                        done = True
+                    
 
                 if event.type == pg.KEYDOWN:
+                    # Si la caja de ID está activa, escribe el texto en ella
                     if input_box_id["active"]:
                         if event.key == pg.K_BACKSPACE:
                             input_box_id["text"] = input_box_id["text"][:-1]
@@ -88,3 +88,6 @@ class buscar_Producto:
                             input_box_id["text"] += event.unicode
 
             pg.display.flip()
+
+        return tree,estados
+
