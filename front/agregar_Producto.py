@@ -9,7 +9,7 @@ class agregar_Producto:
 
     def guardar(self, json): 
         con = ctrl()
-        tree, estados = con.insertarProducto(json)
+        return con.insertarProducto(json)
 
     def formulario(self, screen):
         font = pg.font.Font(None, 32)
@@ -58,6 +58,7 @@ class agregar_Producto:
             screen.blit(save_surface, (button_save.x + 10, button_save.y + 5))
             screen.blit(cancel_surface, (button_cancel.x + 10, button_cancel.y + 5))
 
+            tree,estados=ctrl().service.getTree()
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
@@ -81,7 +82,7 @@ class agregar_Producto:
                                 json["categoria"] = box["text"]
                             else:
                                 json[box["title"].lower()] = box["text"]
-                        self.guardar(json)  # Aquí puedes guardar los datos
+                        tree,estados = self.guardar(json)  # Aquí puedes guardar los datos
                         done = True  
                     elif button_cancel.collidepoint(event.pos):
                         done = True  
@@ -97,3 +98,4 @@ class agregar_Producto:
                             else:
                                 box["text"] += event.unicode  # Agrega el carácter
             pg.display.flip()  # Actualiza la pantalla
+        return tree,estados

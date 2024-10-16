@@ -99,7 +99,7 @@ class Inicio:
                 posiciones = self.menu()
             if self.estado == "agregar_producto":
                 ventana = agregar_Producto()  # Ahora obtiene el estado de vuelta
-                ventana.formulario(self.screen)
+                self.tiendaAVL,estados = ventana.formulario(self.screen)
                 self.estado = "menu"  # Cambia el estado a "menu" cuando termine la ventana agregar_Producto
             if self.estado == "Modificar elemento":
                modi=modificar()
