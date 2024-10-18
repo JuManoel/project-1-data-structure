@@ -23,7 +23,8 @@ Este proyecto se centra en la implementación y manipulación de estructuras de 
 
 ## Agradecimientos especiales
 1. ChatGPT, TabNine
-2. Jairo y Cesar
+2. Sabryna
+3. Jairo y Cesar
 
 ## Forma de organizacion
 1. Cristian: todo lo que esta en la carpeta ./front es de cristian
