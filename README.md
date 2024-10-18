@@ -81,7 +81,7 @@ pondriamos (2) o (3) como nuevo hijo.
 Pero como dije, me dava algo de miedo que de la nada se perdiera un nodo
 entonces por mantener la integridad del arbol prefiero re hacer todo el arbol
 
-## Modificar un nodo (falta front)
+## Modificar un nodo (ok)
 Primero el usuario tiene que elejir el Id del nodo que el quiere y despues poner
 los datos que quieres cambiar, como se fuera crear un nuevo producto
 el hace la busqueda en el arbol, y cambia las referencias de los hijos y los
