@@ -18,8 +18,8 @@ Este proyecto se centra en la implementación y manipulación de estructuras de 
    git clone https://github.com/usuario/project-1-data-structure.git
 
 ## Estudianes que lo hicieron:
-1. Cristian David Grisales
-2. Juan Manoel Miranda Gómez
+1. <a href = "https://github.com/Cristian46310">Cristian David Grisales</a>
+2. <a href = "https://github.com/JuManoel">Juan Manoel Miranda Gómez</a>
 
 ## Agradecimientos especiales
 1. ChatGPT, TabNine
